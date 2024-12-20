@@ -11,10 +11,10 @@ git clone git@github.com:wakelin-g/VisiumHD_testing.git
 cd ./VisiumHD_testing
 
 if [ ! -f $project/spatialde2/visiumhd-mouse-embryo-zarr.tar ]; then
-    if [ ! -d $project/spatialde2/data ]; then
-        python3 setup_scripts/download_test_data.py
-    fi
     if [ ! -d $project/spatialde2/data.zarr ]; then
+        if [ ! -d $project/spatialde2/data ]; then
+            python3 setup_scripts/download_test_data.py
+        fi
         python3 setup_scripts/make_zarr.py
     fi
     tar -cf $project/spatialde2/visiumhd-mouse-embryo-zarr.tar $project/spatialde2/data.zarr
