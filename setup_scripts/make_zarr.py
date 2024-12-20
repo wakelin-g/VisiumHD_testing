@@ -1,10 +1,12 @@
+import os
 import shutil
 from pathlib import Path
 
 import spatialdata as sd
 from spatialdata_io import visium_hd
 
-path = Path().resolve()
+project_path = os.environ["project"]
+path = Path(project_path).resolve()
 path_read = path / "data"
 path_write = path / "data.zarr"
 
