@@ -27,7 +27,7 @@ def cached(variable):
 
 
 class DistanceCache:
-    def __init__(self, X: tf.Tensor, cache=True):
+    def __init__(self, X: tf.Tensor, cache=False):
         self.X = X
         self._cache = cache
 
