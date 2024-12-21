@@ -17,12 +17,14 @@ if [ ! -f $project/spatialde2/visiumhd-mouse-embryo-zarr.tar ]; then
         fi
         python3 setup_scripts/make_zarr.py
     fi
+    # -- TODO: this actually won't work... recursively tarballs the expanded
+    #          $project var and screws up all downstream path resolving
     tar -cf $project/spatialde2/visiumhd-mouse-embryo-zarr.tar $project/spatialde2/data.zarr
 fi
 
 mkdir -p data.zarr/
 mkdir -p outputs/
-tar -xf $project/spatialde2/visiumhd-mouse-embryo-zarr.tar -C data.zarr/
+tar -xf $project/spatialde2/visiumhd-mouse-embryo-zarr.tar -C ./data.zarr/
 
 module purge
 module load StdEnv/2023 gcc python/3.12.4 arrow
