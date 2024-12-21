@@ -1,30 +1,28 @@
 import logging
-from time import time
 import warnings
 from itertools import zip_longest
-from typing import Optional, Dict, Tuple, Union, List, Literal
+from time import time
+from typing import Dict, List, Literal, Optional, Tuple, Union
 
 import numpy as np
 import pandas as pd
-from gpflow import default_float
-
 from anndata import AnnData
-
+from gpflow import default_float
 from tqdm.auto import tqdm
 
-from ._internal.util import DistanceCache
-from ._internal.util import (
-    bh_adjust,
-    calc_sizefactors,
-    default_kernel_space,
-    kspace_walk,
-)
 from ._internal.score_test import (
     NegativeBinomialScoreTest,
     NormalScoreTest,
     combine_pvalues,
 )
 from ._internal.tf_dataset import AnnDataDataset
+from ._internal.util import (
+    DistanceCache,
+    bh_adjust,
+    calc_sizefactors,
+    default_kernel_space,
+    kspace_walk,
+)
 
 
 def _add_individual_score_test_result(resultdict, kernel, kname, gene):
@@ -70,7 +68,7 @@ def test(
     sizefactors: Optional[np.ndarray] = None,
     stack_kernels: Optional[bool] = None,
     obs_dist: Literal["NegativeBinomial", "Normal"] = "NegativeBinomial",
-    use_cache: bool = True,
+    use_cache: bool = False,
 ) -> Tuple[pd.DataFrame, Union[pd.DataFrame, None]]:
     """
     Test for spatially variable genes.

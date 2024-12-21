@@ -47,6 +47,6 @@ source $project/spatialde2/tensorflow/bin/activate
 python3 run_spatialde2.py
 
 log "Moving output file to project directory..."
-mv outputs/spatialde2_outputs.csv $project/spatialde2/spatialde2_outputs.csv
+mv outputs/svg_full.pkl $project/spatialde2/svg_full.pkl
 
 log "Job completed successfully."
