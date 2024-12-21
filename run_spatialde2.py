@@ -28,7 +28,6 @@ adata.var["mt"] = adata.var_names.str.startswith("^mt-")
 sc.pp.calculate_qc_metrics(adata, qc_vars=["mt"], inplace=True)
 
 sc.pp.filter_cells(adata, min_counts=800)
-adata = adata[adata.obs["pct_mt"] < 20]
 sc.pp.filter_genes(adata, min_cells=100)
 
 svg_full, _ = SpatialDE2.test(adata, stack_kernels=False, use_cache=False, omnibus=True)
