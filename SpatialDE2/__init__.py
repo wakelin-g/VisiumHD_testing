@@ -20,8 +20,12 @@ if gpus:
     try:
         for gpu in gpus:
             tf.config.experimental.set_memory_growth(gpu, True)
+            tf.config.experimental.set_virtual_device_configuration(
+                gpu, [tf.config.experimental.VirtualDeviceConfiguration(memory=30000)]
+            )
         logical_gpus = tf.config.experimental.list_logical_devices("GPU")
     except RuntimeError as e:
         print(e)
+
 del tf
 del gpus
