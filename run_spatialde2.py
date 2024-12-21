@@ -1,7 +1,5 @@
 import os
 
-import pandas as pd
-import scanpy as sc
 import spatialdata as sd
 import SpatialDE
 
