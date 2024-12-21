@@ -6,29 +6,46 @@
 #SBATCH --gres=gpu:1
 #SBATCH --output=%N-%j.out
 
+set -e
+set -o pipefail
+
+log() {
+    echo "$(date +"%Y-%m-%d %H:%M:%S") - $1"
+}
+
 cd $SLURM_TMPDIR
+log "Cloning repository..."
 git clone https://github.com/wakelin-g/VisiumHD_testing.git
 cd ./VisiumHD_testing
 
 if [ ! -f $project/spatialde2/visiumhd-mouse-embryo-zarr.tar ]; then
     if [ ! -d $project/spatialde2/data.zarr ]; then
         if [ ! -d $project/spatialde2/data ]; then
+            log "Downloading test data..."
             python3 setup_scripts/download_test_data.py
         fi
+        log "Converting test data to Zarr format..."
         python3 setup_scripts/make_zarr.py
     fi
     # -- TODO: this actually won't work... recursively tarballs the expanded
     #          $project var and screws up all downstream path resolving
+    log "Creating tarball of Zarr data..."
     tar -cf $project/spatialde2/visiumhd-mouse-embryo-zarr.tar $project/spatialde2/data.zarr
 fi
 
+log "Extracting tarball..."
 mkdir -p outputs/
 tar -xf $project/spatialde2/visiumhd-mouse-embryo-zarr.tar
 
+log "Loading modules..."
 module purge
 module load StdEnv/2023 gcc python/3.12.4 arrow
 source $project/spatialde2/tensorflow/bin/activate
 
+log "Running SpatialDE2..."
 python3 run_spatialde2.py
 
+log "Moving output file to project directory..."
 mv outputs/spatialde2_outputs.csv $project/spatialde2/spatialde2_outputs.csv
+
+log "Job completed successfully."
