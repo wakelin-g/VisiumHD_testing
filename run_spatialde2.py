@@ -25,7 +25,7 @@ adata = sdata_subset["square_016um"].copy()
 adata.var_names_make_unique()
 
 adata.var["mt"] = adata.var_names.str.startswith("^mt-")
-sc.pp.calculate_qc_metrics(adata, qc_vars["mt"], inplace=True)
+sc.pp.calculate_qc_metrics(adata, qc_vars=["mt"], inplace=True)
 
 sc.pp.filter_cells(adata, min_counts=800)
 adata = adata[adata.obs["pct_mt"] < 20]
