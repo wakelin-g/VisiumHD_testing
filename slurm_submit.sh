@@ -27,22 +27,23 @@ if [ ! -f $project/spatialde2/visiumhd-mouse-embryo-zarr.tar ]; then
         log "Converting test data to Zarr format..."
         python3 setup_scripts/make_zarr.py
     fi
-    # -- TODO: this actually won't work... recursively tarballs the expanded
-    #          $project var and screws up all downstream path resolving
     log "Creating tarball of Zarr data..."
-    tar -cf $project/spatialde2/visiumhd-mouse-embryo-zarr.tar $project/spatialde2/data.zarr
+    cd $project/spatialde2
+    tar -cf visiumhd-mouse-embryo-zarr.tar data.zarr
+    cd $SLURM_TMPDIR/VisiumHD_testing
 fi
 
 log "Extracting tarball..."
-mkdir -p outputs/
 tar -xf $project/spatialde2/visiumhd-mouse-embryo-zarr.tar
+
+log "Creating outputs directory..."
+mkdir -p outputs/
 
 log "Loading modules..."
 module purge
 module load StdEnv/2023 gcc python/3.12.4 arrow
 source $project/spatialde2/tensorflow/bin/activate
 
-log "Running SpatialDE2..."
 python3 run_spatialde2.py
 
 log "Moving output file to project directory..."
