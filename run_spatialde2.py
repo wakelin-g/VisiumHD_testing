@@ -1,7 +1,7 @@
 import os
 
 import spatialdata as sd
-import SpatialDE
+import SpatialDE2
 
 out_dir = "outputs/"
 
