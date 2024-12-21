@@ -31,4 +31,4 @@ source $project/spatialde2/tensorflow/bin/activate
 
 python3 run_spatialde2.py
 
-tar -cf $project/spatialde2/outputs/results-archive.tar outputs/
+mv outputs/spatialde2_outputs.csv $project/spatialde2/spatialde2_outputs.csv
