@@ -7,7 +7,7 @@
 #SBATCH --output=%N-%j.out
 
 cd $SLURM_TMPDIR
-git clone git@github.com:wakelin-g/VisiumHD_testing.git
+git clone https://github.com/wakelin-g/VisiumHD_testing.git
 cd ./VisiumHD_testing
 
 if [ ! -f $project/spatialde2/visiumhd-mouse-embryo-zarr.tar ]; then
