@@ -32,4 +32,4 @@ sc.pp.filter_genes(adata, min_cells=100)
 
 svg_full, _ = SpatialDE2.test(adata, stack_kernels=False, use_cache=False, omnibus=True)
 svg_full["total_counts"] = np.asarray(adata.X.sum(axis=0)).squeeze()
-svg_full.to_pickle("svg_full.pkl")
+svg_full.to_pickle(os.path.join(out_dir, "svg_full.pkl"))
